@@ -64,16 +64,16 @@ app.post('/register', (req, res) => {
     //    console.log(result)
     if(result[0].count !== 0) return res.send({msg: '注册名重复，请更换', status: 503})
     body.ctime = moment().format('YYYY-MM-DD HH:mm:ss') 
-    
     const sql2 = 'insert into my_blog1 set ?'
     console.log(body)
     conn.query(sql2, body, (err, result) => {
-        // if(err) return res.send({msg: })
-        console.log(err)
+        if(err) return res.send({msg: '注册用户失败', status:504 })
+        // console.log(result)
+        if(result.affectedRows !==1) return res.rend({msg:'注册用户失败', status: 505})
+        res.send({msg: '注册用户成功', status: 200}) 
 
     })
    })
-    // res.send({msg: '注册用户成功', status: 200})
 })
 
 //5.启动服务器
